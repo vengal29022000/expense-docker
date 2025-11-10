@@ -1,0 +1,33 @@
+networks:
+  expense: {}
+
+volumes:
+  mysql:
+services:
+  backend:
+    image: gowtham330/backend:1.0.0
+    networks:
+    - expense
+    container_name: backend
+    depend_on:
+    - mysql
+
+  mysql:
+    image: gowtham330/mysql:1.0.0
+    networks:
+    - expense
+    container_name: mysql
+    volumes:
+    - mysql:/var/lib/mysql
+  
+  frontend:
+    image: gowtham330/frontend:1.0.0
+    networks:
+    - expense
+    container_name: frontend
+    ports:
+    - 80:80
+    depends_on:
+    - backend
+
+  
